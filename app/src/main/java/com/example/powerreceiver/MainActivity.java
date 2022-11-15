@@ -3,6 +3,7 @@ package com.example.powerreceiver;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Random;
+
+public class MainActivity extends Activity {
     private CustomReceiver mReceiver = new CustomReceiver();
 
         private static final String ACTION_CUSTOM_BROADCAST =
@@ -37,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendCustomBroadcast(View view) {
+        int r = new Random().nextInt(20);
+        String random = String.valueOf(r*r);
         Intent customBroadcastIntent = new Intent(ACTION_CUSTOM_BROADCAST);
+        customBroadcastIntent.putExtra("KEY", random);
         LocalBroadcastManager.getInstance(this).sendBroadcast(customBroadcastIntent);
 
     }

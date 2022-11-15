@@ -14,6 +14,7 @@ public class CustomReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         String intentAction = intent.getAction();
+        String intentExtra = intent.getExtras().getString("KEY");
         if(intentAction != null){
             String toastMessage = "unknown intent action";
             switch (intentAction){
@@ -27,12 +28,10 @@ public class CustomReceiver extends BroadcastReceiver {
                     toastMessage = "Headphones pluged in";
                     break;
                 case ACTION_CUSTOM_BROADCAST:
-                    toastMessage = "Custom Broadcast Received";
+                    toastMessage = "Custom Broadcast Received " + intentExtra;
                     break;
-
             }
             Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show();
         }
-
     }
 }
