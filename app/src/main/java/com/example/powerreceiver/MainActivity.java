@@ -5,12 +5,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     private CustomReceiver mReceiver = new CustomReceiver();
-    private static final String ACTION_CUSTOM_BROADCAST =
+
+        private static final String ACTION_CUSTOM_BROADCAST =
             BuildConfig.APPLICATION_ID + ".ACTION_CUSTOM_BROADCAST";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
         filter.addAction(Intent.ACTION_POWER_CONNECTED);
-        this.registerReceiver(mReceiver, filter);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
+        filter.addAction(Intent.ACTION_HEADSET_PLUG);
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(ACTION_CUSTOM_BROADCAST));
+        this.registerReceiver(mReceiver, filter);
     }
 
     @Override
